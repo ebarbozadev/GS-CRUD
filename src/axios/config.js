@@ -12,7 +12,5 @@ const pegarAPI = axios.get('http://servidorlocal.gerencesistemas.com.br:253/cand
         console.error(erro);
     });
 
-    console.log(resposta.data)
-
 // Exportando para conseguirmos utilizar em outro arquivo
 export default pegarAPI;
