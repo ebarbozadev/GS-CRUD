@@ -3,7 +3,7 @@ import Tabela from '../componentes/Tabela';
 import pegarAPI from '../axios/config.js';
 
 export default function Inicio(){
-    console.log(pegarAPI);
+    console.log(resposta);
 
     return(
         <div>
