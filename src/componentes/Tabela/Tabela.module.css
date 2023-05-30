@@ -1,0 +1,56 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px 5px #000914;
+}
+
+table caption {
+    padding-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+thead th {
+    background-color: var(--azul-nivel-3);
+    color: var(--preto);
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    font-weight: 700;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #000;
+}
+
+tbody tr {
+    background-color: var(--azul-nivel-2);
+}
+
+tbody tr:hover {
+    background-color: var(--azul-nivel-1    );
+}
+
+.opcoes {
+    display: flex;
+    gap: 10px;
+}
+
+.alterar_btn,
+.excluir_btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alterar_btn {
+    background-color: #007bff;
+}
+
+.excluir_btn {
+    background-color: #dc3545;
+}

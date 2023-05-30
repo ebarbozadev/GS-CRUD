@@ -1,0 +1,25 @@
+header {
+    margin: 2em 0;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li:nth-child(2) {
+    margin-left: 10px;
+}
+
+header nav ul li {
+    background-color: var(--azul-nivel-3);
+    box-shadow: 5px 5px 5px #000914;
+    padding: 10px;
+    border-radius: 70px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: var(--cinza);
+    font-size: .8em;
+}

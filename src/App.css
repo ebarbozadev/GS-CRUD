@@ -1,0 +1,32 @@
+/* Gerais */
+:root {
+    --azul-nivel-1: #96B9FD;
+    --azul-nivel-2: #7BA4FC;
+    --azul-nivel-3: #5081FB;
+    --azul-nivel-4: #051D3B;
+    --preto-cinza: #141414;
+    --preto: #181818;
+    --branco: #FFFFFF;
+    --cinza: #f0f0f0;
+    --verde: #27C93F;
+    --vermelho: #FF5F56;
+    --amarelho: #FFBD2E;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Estilização */
+    background-color: var(--azul-nivel-4);
+    padding: 0 100px;
+
+    /* Texto */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
