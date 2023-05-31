@@ -5,13 +5,6 @@ table {
     box-shadow: 5px 5px 5px #000914;
 }
 
-table caption {
-    padding-top: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
 thead th {
     background-color: var(--azul-nivel-3);
     color: var(--preto);
@@ -23,7 +16,7 @@ thead th {
 
 tbody td {
     padding: 10px;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
 tbody tr {

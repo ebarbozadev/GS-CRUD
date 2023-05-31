@@ -1,0 +1,7 @@
+.formulario {
+    background-color: var(--azul-nivel-3);
+    width: 500px;
+    padding: 20px 20px 40px 20px;
+    box-shadow: 5px 5px 5px #000914;
+    border-radius: 16px;
+}
