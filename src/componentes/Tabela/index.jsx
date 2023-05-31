@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 // Estilização
 import styles from './Tabela.module.css';
 

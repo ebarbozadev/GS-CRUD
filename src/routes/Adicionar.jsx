@@ -4,7 +4,7 @@ import styles from './Adicionar.module.css';
 
 export default function Adicionar() {
     return (
-        <form className={styles.formulario}>
+        <div className={styles.formulario}>
             {/* 
                 Dados necessários:
                 - nomeCandidato
@@ -27,6 +27,6 @@ export default function Adicionar() {
                 <CampoFormulario htmlFor={"nota02"} children={"Nota 2"} type={"number"} name={"nota02"} id={"nota02"} placeholder={"Digite a segunda nota do candidato"} />
                 <CampoFormulario htmlFor={"nota03"} children={"Nota 3"} type={"number"} name={"nota03"} id={"nota03"} placeholder={"Digite a terceira nota do candidato"} /> 
             */}
-        </form>
+        </div>
     );
 }

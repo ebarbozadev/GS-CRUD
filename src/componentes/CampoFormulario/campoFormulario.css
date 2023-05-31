@@ -62,7 +62,7 @@ input:focus {
     justify-content: flex-end;
 }
 
-.secao3 input[type="button"]{
+.secao3 input[type="submit"]{
     background-color: var(--verde);
     margin-left: auto;
     width: 100px;
