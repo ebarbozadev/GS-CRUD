@@ -18,29 +18,44 @@ export default function CampoFormulario() {
         evento.preventDefault();
 
         const usuario = {
-            // O valor será preenchido automaticamente pela API
-            codCandidato: null,
             nomeCandidato,
             cpf,
             telefone,
-            Notas: [
-                {
-                    // O valor será preenchido automaticamente pela API
-                    idCandidato: null,
-                    nota01: parseInt(nota01),
-                    nota02: parseInt(nota02),
-                    nota03: parseInt(nota03),
-                },
-            ],
+            nota01: parseInt(nota01),
+            nota02: parseInt(nota02),
+            nota03: parseInt(nota03)
         };
 
-        try {
-            await pegarAPI.post('/candidatos', usuario); // Adicione os headers aqui
-            console.log(usuario);
-            navegar('/');
-        } catch (erro) {
-            console.error(erro);
-        }
+        const response = await pegarAPI.post('/candidatos', usuario, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        console.log("response", response);
+        console.log(usuario)
+
+        // const usuario = {
+        //     codCandidato: null,
+        //     nome: 'l',
+        //     cpf: '',
+        //     telefone: '',
+        //     notas: [
+        //         {
+        //             nota01: null,
+        //             nota02: null,
+        //             nota03: null,
+        //         },
+        //     ],
+        // };
+
+        // try {
+        //     await pegarAPI.post('/candidatos', usuario); // Adicione os headers aqui
+        //     console.log(usuario);
+        navegar('/');
+        // } catch (erro) {
+        //     console.error(erro);
+        // }
     };
 
     console.log(typeof nota01); // "string"
