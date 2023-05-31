@@ -34,12 +34,8 @@ export default function CampoFormulario() {
             ],
         };
 
-        const headers = {
-            'Content-Type': 'application/json',
-        };
-
         try {
-            await pegarAPI.post('/candidatos', usuario, { headers }); // Adicione os headers aqui
+            await pegarAPI.post('/candidatos', usuario); // Adicione os headers aqui
             console.log(usuario);
             navegar('/');
         } catch (erro) {

@@ -6,6 +6,10 @@ const baseURL = 'http://servidorlocal.gerencesistemas.com.br:253';
 
 const pegarAPI = axios.create({
   baseURL: baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  }
 });
 
 // Exportando para conseguirmos utilizar em outro arquivo
