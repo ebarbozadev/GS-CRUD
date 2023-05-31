@@ -39,7 +39,7 @@ export default function CampoFormulario() {
         };
 
         try {
-            await pegarAPI.post('/candidatos', usuario, headers);
+            await pegarAPI.post('/candidatos', usuario, { headers }); // Adicione os headers aqui
             console.log(usuario);
             navegar('/');
         } catch (erro) {
