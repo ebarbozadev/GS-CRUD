@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import pegarAPI from '../../axios/config.js';
 import './campoFormulario.css';
 
@@ -18,49 +17,34 @@ export default function CampoFormulario() {
         evento.preventDefault();
 
         const usuario = {
-            nomeCandidato,
-            cpf,
-            telefone,
-            nota01: parseInt(nota01),
-            nota02: parseInt(nota02),
-            nota03: parseInt(nota03)
+            // O valor será preenchido automaticamente pela API
+            codCandidato: null,
+            nomeCandidato: nomeCandidato,
+            cpf: cpf,
+            telefone: telefone,
+            Notas: [
+                {
+                    // O valor será preenchido automaticamente pela API
+                    idCandidato: null,
+                    nota01: parseInt(nota01),
+                    nota02: parseInt(nota02),
+                    nota03: parseInt(nota03),
+                },
+            ],
         };
 
-        const response = await pegarAPI.post('/candidatos', usuario, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-
-        console.log("response", response);
-        console.log(usuario)
-
-        // const usuario = {
-        //     codCandidato: null,
-        //     nome: 'l',
-        //     cpf: '',
-        //     telefone: '',
-        //     notas: [
-        //         {
-        //             nota01: null,
-        //             nota02: null,
-        //             nota03: null,
-        //         },
-        //     ],
-        // };
-
-        // try {
-        //     await pegarAPI.post('/candidatos', usuario); // Adicione os headers aqui
-        //     console.log(usuario);
-        navegar('/');
-        // } catch (erro) {
-        //     console.error(erro);
-        // }
+        try {
+            await pegarAPI.post('/candidatos', usuario); // Adicione os headers aqui
+            console.log(usuario);
+            navegar('/');
+        } catch (erro) {
+            console.error(erro);
+        }
     };
 
-    console.log(typeof nota01); // "string"
     return (
-        <form onSubmit={cadastrar} method="POST">
+        <form onSubmit={cadastrar}>
+            {/* Campos de entrada para os dados do usuário */}
             <div className="secao1">
                 <label htmlFor="nomeCandidato">Nome do Candidato</label>
                 <input
