@@ -1,4 +1,4 @@
-table {
+/* table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -17,6 +17,7 @@ thead th {
 tbody td {
     padding: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
 }
 
 tbody tr {
@@ -24,12 +25,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-    background-color: var(--azul-nivel-1    );
-}
-
-.opcoes {
-    display: flex;
-    gap: 10px;
+    background-color: var(--azul-nivel-1);
 }
 
 .alterar_btn,
@@ -46,4 +42,101 @@ tbody tr:hover {
 
 .excluir_btn {
     background-color: #dc3545;
+}
+
+thead tr th:nth-child(1) {
+    text-align: center;
+}
+
+.codCandidato,
+.nota01,
+.nota02,
+.nota03,
+.estado,
+thead tr th:nth-child(5),
+thead tr th:nth-child(6),
+thead tr th:nth-child(7),
+thead tr th:nth-child(8) {
+    text-align: center;
+    width: auto;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-around;
+} */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px 5px #000914;
+}
+
+thead th {
+    background-color: var(--azul-nivel-3);
+    color: var(--preto);
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    font-weight: 700;
+}
+
+tbody td {
+    padding: 5px 0 5px 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
+}
+
+tbody tr {
+    background-color: var(--azul-nivel-2);
+}
+
+tbody tr:hover {
+    background-color: var(--azul-nivel-1);
+}
+
+.alterar_btn,
+.excluir_btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alterar_btn {
+    background-color: #007bff;
+}
+
+.excluir_btn {
+    background-color: #dc3545;
+}
+
+thead tr th:nth-child(1),
+.codCandidato,
+.nota01,
+.nota02,
+.nota03,
+.estado,
+thead tr th:nth-child(5),
+thead tr th:nth-child(6),
+thead tr th:nth-child(7),
+thead tr th:nth-child(8) {
+    text-align: center;
+}
+
+
+.nota03,
+thead tr th:nth-child(7),
+.nota02,
+thead tr th:nth-child(6),
+.nota01,
+thead tr th:nth-child(5) {
+    width: 80px;
+    padding: 0;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-around;
 }
