@@ -1,11 +1,13 @@
 import React from 'react';
 
-
-// Estilização
 import styles from './Tabela.module.css';
 
-export default function Tabela(){
-    return(
+export default function Tabela({ usuarios }) {
+    if (!Array.isArray(usuarios) || usuarios.length === 0) {
+        return <p>Não há usuários cadastrados</p>;
+    }
+
+    return (
         <table>
             <thead>
                 <tr>
@@ -21,41 +23,23 @@ export default function Tabela(){
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>Emanuel Marcos</td>
-                    <td>000.000.000-00</td>
-                    <td>+55 44 99999-9999</td>
-                    <td>9</td>
-                    <td>8</td>
-                    <td>10</td>
-                    <td>Aprovado</td>
-                    <td><span className={styles.alterar_btn}>Alterar</span> <span className={styles.excluir_btn}>Excluir</span></td>
-                </tr>
-
-                <tr>
-                    <td>01</td>
-                    <td>Emanuel Marcos</td>
-                    <td>000.000.000-00</td>
-                    <td>+55 44 99999-9999</td>
-                    <td>9</td>
-                    <td>8</td>
-                    <td>10</td>
-                    <td>Aprovado</td>
-                    <td><span className={styles.alterar_btn}>Alterar</span> <span className={styles.excluir_btn}>Excluir</span></td>
-                </tr>
-
-                <tr>
-                    <td>01</td>
-                    <td>Emanuel Marcos</td>
-                    <td>000.000.000-00</td>
-                    <td>+55 44 99999-9999</td>
-                    <td>9</td>
-                    <td>8</td>
-                    <td>10</td>
-                    <td>Aprovado</td>
-                    <td><span className={styles.alterar_btn}>Alterar</span> <span className={styles.excluir_btn}>Excluir</span></td>
-                </tr>
+                {usuarios.map((usuario) => (
+                    <tr key={usuario.codCandidato}>
+                        <td>{usuario.codCandidato}</td>
+                        <td>{usuario.nomeCandidato}</td>
+                        <td>{usuario.cpf}</td>
+                        <td>{usuario.telefone}</td>
+                        <td>{usuario.Notas[0].nota01}</td>
+                        <td>{usuario.Notas[0].nota02}</td>
+                        <td>{usuario.Notas[0].nota03}</td>
+                        <td>10</td>
+                        <td>Aprovado</td>
+                        <td>
+                            <span className={styles.alterar_btn}>Alterar</span>{' '}
+                            <span className={styles.excluir_btn}>Excluir</span>
+                        </td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     );
