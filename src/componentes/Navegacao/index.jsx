@@ -10,7 +10,7 @@ export default function Navegacao() {
             <nav>
                 <ul>
                     <li><Link to="/">Cadastrados</Link></li>
-                    <li><Link to="/Adicionar">Adicionar</Link></li>
+                    <li><Link to="/adicionar">Adicionar</Link></li>
                 </ul>
             </nav>
         </header>

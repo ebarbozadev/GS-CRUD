@@ -49,6 +49,24 @@ export default function CampoFormulario() {
         } catch (erro) {
             console.error(erro);
         }
+
+        try {
+            await pegarAPI.put('/candidatos', usuario, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    nomeCandidato: nomeCandidato,
+                    cpf: cpf,
+                    telefone: telefone,
+                    nota01: nota01,
+                    nota02: nota02,
+                    nota03: nota03,
+                },
+            });
+            console.log(usuario);
+            navegar('/');
+        } catch (erro) {
+            console.error(erro);
+        }
     };
 
     return (

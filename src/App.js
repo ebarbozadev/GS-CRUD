@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import Navegacao from './componentes/Navegacao';
-import Tabela from './componentes/Tabela';
+import Inicio from './routes/Inicio.jsx'
 import Adicionar from './routes/Adicionar';
+import AlterarFormulario from './componentes/Tabela/AlterarFormulario';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
       <div className="App">
         <Outlet />
         <Routes>
-          <Route path="/" element={<Tabela />} />
+          <Route path="/" element={<Inicio />} />
           <Route path="/Adicionar" element={<Adicionar />} />
+          <Route path="/alterar" element={<AlterarFormulario />} />
         </Routes>
       </div>
     </div>
