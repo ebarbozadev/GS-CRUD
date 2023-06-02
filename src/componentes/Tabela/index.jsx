@@ -41,9 +41,15 @@ export default function Tabela() {
     };
 
     const alterarUsuario = (codCandidato) => {
-        // Lógica para redirecionar para a página de alteração com o ID do usuário
-        navegar(`/alterar`);
-      };
+        // Define o cabeçalho com o id do candidato
+        const headers = {
+            codCandidato: codCandidato.toString()
+        };
+
+        // Redireciona para a página de alteração, passando os headers
+        navegar('/alterar', { state: { headers } });
+    };
+
 
     if (usuarios.length === 0) {
         return null; // Retorna null se não houver usuários
@@ -85,7 +91,7 @@ export default function Tabela() {
                                 onClick={() => alterarUsuario(usuario.codCandidato)}
                             >
                                 Alterar
-                            </button>{" "}
+                            </button>{' '}
                             <button className={styles.excluir_btn} onClick={() => excluirUsuario(usuario.codCandidato)}>
                                 Excluir
                             </button>

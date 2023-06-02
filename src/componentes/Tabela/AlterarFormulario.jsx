@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import pegarAPI from '../../axios/config';
 
 const AlterarFormulario = () => {
@@ -11,12 +11,14 @@ const AlterarFormulario = () => {
     const [nota03, setNota03] = useState('');
 
     const history = useNavigate();
+    const location = useLocation();
+    const headers = useMemo(() => location.state?.headers || {}, [location.state]);
 
     useEffect(() => {
         // Recupera os dados do candidato para preencher o formulário
         const getCandidato = async () => {
             try {
-                const response = await pegarAPI.get('/candidatos');
+                const response = await pegarAPI.get('/candidatos', { headers });
                 const candidato = response.data;
                 setNomeCandidato(candidato.nomeCandidato);
                 setCpf(candidato.cpf);
@@ -30,7 +32,7 @@ const AlterarFormulario = () => {
         };
 
         getCandidato();
-    }, []);
+    }, [headers]);
 
     const alterar = async () => {
         const usuario = {
@@ -49,18 +51,9 @@ const AlterarFormulario = () => {
         };
 
         try {
-            await pegarAPI.put('/candidatos', usuario, {
-                headers: {
-                    nomeCandidato: nomeCandidato,
-                    cpf: cpf,
-                    telefone: telefone,
-                    nota01: nota01,
-                    nota02: nota02,
-                    nota03: nota03,
-                },
-            });
+            await pegarAPI.put('/candidatos', usuario, { headers });
             console.log(usuario);
-            history.push('/');
+            history('/');
         } catch (erro) {
             console.error(erro);
         }
