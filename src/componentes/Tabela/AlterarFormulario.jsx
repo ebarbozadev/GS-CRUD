@@ -1,31 +1,26 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import pegarAPI from '../../axios/config';
 
 const AlterarFormulario = () => {
     const [nomeCandidato, setNomeCandidato] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
-    const [nota01, setNota01] = useState('');
-    const [nota02, setNota02] = useState('');
-    const [nota03, setNota03] = useState('');
+    const [notas, setNotas] = useState([]);
 
-    const history = useNavigate();
     const location = useLocation();
     const headers = useMemo(() => location.state?.headers || {}, [location.state]);
 
     useEffect(() => {
-        // Recupera os dados do candidato para preencher o formulário
         const getCandidato = async () => {
             try {
                 const response = await pegarAPI.get('/candidatos', { headers });
-                const candidato = response.data;
+                const candidato = response.data[0];
+
                 setNomeCandidato(candidato.nomeCandidato);
                 setCpf(candidato.cpf);
                 setTelefone(candidato.telefone);
-                setNota01(candidato.Notas[0].nota01.toString());
-                setNota02(candidato.Notas[0].nota02.toString());
-                setNota03(candidato.Notas[0].nota03.toString());
+                setNotas(candidato.Notas || []);
             } catch (error) {
                 console.error(error);
             }
@@ -35,28 +30,39 @@ const AlterarFormulario = () => {
     }, [headers]);
 
     const alterar = async () => {
-        const usuario = {
-            codCandidato: null,
-            nomeCandidato: nomeCandidato,
-            cpf: cpf,
-            telefone: telefone,
-            Notas: [
-                {
-                    idCandidato: null,
-                    nota01: parseInt(nota01),
-                    nota02: parseInt(nota02),
-                    nota03: parseInt(nota03),
-                },
-            ],
-        };
-
         try {
-            await pegarAPI.put('/candidatos', usuario, { headers });
-            console.log(usuario);
-            history('/');
+            const headersAtualizados = {
+                ...headers,
+                nomeCandidato,
+                cpf,
+                telefone,
+            };
+
+            await pegarAPI.put('/candidatos', {
+                nomeCandidato,
+                cpf,
+                telefone,
+                Notas: notas.map((nota) => ({
+                    idCandidato: nota.idCandidato,
+                    nota01: nota.nota01 !== "" ? parseInt(nota.nota01) : null,
+                    nota02: nota.nota02 !== "" ? parseInt(nota.nota02) : null,
+                    nota03: nota.nota03 !== "" ? parseInt(nota.nota03) : null,
+                })),
+            }, { headers: headersAtualizados });
         } catch (erro) {
             console.error(erro);
         }
+    };
+
+    const handleNotaChange = (index, field, value) => {
+        setNotas((notas) => {
+            const updatedNotas = [...notas];
+            updatedNotas[index] = {
+                ...updatedNotas[index],
+                [field]: value,
+            };
+            return updatedNotas;
+        });
     };
 
     return (
@@ -65,60 +71,57 @@ const AlterarFormulario = () => {
             <form>
                 <label>
                     Nome:
-                    <input
-                        type="text"
-                        value={nomeCandidato}
-                        onChange={(evento) => setNomeCandidato(evento.target.value)}
-                    />
+                    <input type="text" value={nomeCandidato} onChange={(evento) => setNomeCandidato(evento.target.value)} />
                 </label>
                 <br />
                 <label>
                     CPF:
-                    <input
-                        type="text"
-                        value={cpf}
-                        onChange={(evento) => setCpf(evento.target.value)}
-                    />
+                    <input type="text" value={cpf} onChange={(evento) => setCpf(evento.target.value)} />
                 </label>
                 <br />
                 <label>
                     Telefone:
-                    <input
-                        type="text"
-                        value={telefone}
-                        onChange={(evento) => setTelefone(evento.target.value)}
-                    />
+                    <input type="text" value={telefone} onChange={(evento) => setTelefone(evento.target.value)} />
                 </label>
                 <br />
-                <label>
-                    Nota 1:
-                    <input
-                        type="text"
-                        value={nota01}
-                        onChange={(evento) => setNota01(evento.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Nota 2:
-                    <input
-                        type="text"
-                        value={nota02}
-                        onChange={(evento) => setNota02(evento.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Nota 3:
-                    <input
-                        type="text"
-                        value={nota03}
-                        onChange={(evento) => setNota03(evento.target.value)}
-                    />
-                </label>
+                {notas.map((nota, index) => (
+                    <div key={index}>
+                        <label>
+                            Nota 01:
+                            <input
+                                type="number"
+                                value={nota.nota01 !== null ? nota.nota01.toString() : ""}
+                                onChange={(evento) => handleNotaChange(index, 'nota01', evento.target.value)}
+                            />
+                        </label>
+                        <br />
+                        <label>
+                            Nota 02:
+                            <input
+                                type="number"
+                                value={nota.nota02 !== null ? nota.nota02.toString() : ""}
+                                onChange={(evento) => handleNotaChange(index, 'nota02', evento.target.value)}
+                            />
+                        </label>
+
+                        <br />
+                        <label>
+                            Nota 03:
+                            <input
+                                type="number"
+                                value={nota.nota03 !== null ? nota.nota03.toString() : ""}
+                                onChange={(evento) => handleNotaChange(index, 'nota03', evento.target.value)}
+                            />
+                        </label>
+                        <br />
+                    </div>
+                ))}
+                <button type="button" onClick={() => setNotas((notas) => [...notas, {}])}>
+                    Adicionar Nota
+                </button>
                 <br />
                 <button type="button" onClick={alterar}>
-                    Alterar
+                    Alterar Candidato
                 </button>
             </form>
         </div>

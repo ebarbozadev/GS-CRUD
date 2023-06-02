@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './Tabela.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
 export default function Tabela() {
     const navegar = useNavigate();
 
@@ -45,10 +44,10 @@ export default function Tabela() {
         const headers = {
             codCandidato: codCandidato.toString()
         };
-
+    
         // Redireciona para a página de alteração, passando os headers
         navegar('/alterar', { state: { headers } });
-    };
+    }; 
 
 
     if (usuarios.length === 0) {

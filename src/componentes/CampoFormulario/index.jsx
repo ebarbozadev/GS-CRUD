@@ -17,14 +17,12 @@ export default function CampoFormulario() {
         evento.preventDefault();
 
         const usuario = {
-            // O valor será preenchido automaticamente pela API
             codCandidato: null,
             nomeCandidato: nomeCandidato,
             cpf: cpf,
             telefone: telefone,
             Notas: [
                 {
-                    // O valor será preenchido automaticamente pela API
                     idCandidato: null,
                     nota01: parseInt(nota01),
                     nota02: parseInt(nota02),
@@ -34,16 +32,24 @@ export default function CampoFormulario() {
         };
 
         try {
-            await pegarAPI.post('/candidatos', usuario, {
+            await pegarAPI.post('/candidatos', {
+                nomeCandidato,
+                cpf,
+                telefone,
+                Notas: [
+                  {
+                    nota01: parseInt(nota01),
+                    nota02: parseInt(nota02),
+                    nota03: parseInt(nota03),
+                  },
+                ],
+              }, {
                 headers: {
-                    nomeCandidato,
-                    cpf,
-                    telefone,
-                    nota01,
-                    nota02,
-                    nota03,
+                  nomeCandidato,
+                  cpf,
+                  telefone,
                 },
-            });
+              });              
             console.log(usuario);
             navegar('/');
         } catch (erro) {
