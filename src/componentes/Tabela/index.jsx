@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Tabela() {
-    const navigate = useNavigate();
+    const navegar = useNavigate();
 
     const [usuarios, setUsuarios] = useState([]);
 
@@ -28,25 +28,22 @@ export default function Tabela() {
     const excluirUsuario = async (codCandidato) => {
         try {
             await axios.delete(
-                `http://servidorlocal.gerencesistemas.com.br:253/candidatos/${codCandidato}`
+                'http://servidorlocal.gerencesistemas.com.br:253/candidatos',
+                { headers: { codCandidato } }
             );
             // Atualize a lista de usuários após a exclusão
-            const novaLista = usuarios.filter(
-                (usuario) => usuario.codCandidato !== codCandidato
-            );
+            const novaLista = usuarios.filter((usuario) => usuario.codCandidato !== codCandidato);
             setUsuarios(novaLista);
+            navegar('/');
         } catch (erro) {
             console.log(erro);
         }
     };
 
-    const alterarCandidato = (codCandidato) => {
-        const candidato = usuarios.find(
-            (usuario) => usuario.codCandidato === codCandidato
-        );
-        // Redirecionar para a página de alteração passando o candidato como estado
-        navigate('/alterar', { state: { candidato } });
-    };
+    const alterarUsuario = (codCandidato) => {
+        // Lógica para redirecionar para a página de alteração com o ID do usuário
+        navegar(`/alterar`);
+      };
 
     if (usuarios.length === 0) {
         return null; // Retorna null se não houver usuários
@@ -83,18 +80,15 @@ export default function Tabela() {
                         ))}
                         <td className={styles.estado}>Aprovado</td>
                         <td className={styles.botoes}>
-                            <span
+                            <button
                                 className={styles.alterar_btn}
-                                onClick={() => alterarCandidato(usuario.codCandidato)}
+                                onClick={() => alterarUsuario(usuario.codCandidato)}
                             >
                                 Alterar
-                            </span>
-                            <span
-                                className={styles.excluir_btn}
-                                onClick={() => excluirUsuario(usuario.codCandidato)}
-                            >
+                            </button>{" "}
+                            <button className={styles.excluir_btn} onClick={() => excluirUsuario(usuario.codCandidato)}>
                                 Excluir
-                            </span>
+                            </button>
                         </td>
                     </tr>
                 ))}
