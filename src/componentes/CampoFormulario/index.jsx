@@ -34,21 +34,12 @@ export default function CampoFormulario() {
         };
 
         try {
-            await pegarAPI.post('/candidatos', usuario, {
-                headers: {
-                    nomeCandidato,
-                    cpf,
-                    telefone,
-                    nota01,
-                    nota02,
-                    nota03,
-                },
-            });
+            await pegarAPI.post('/candidatos', usuario);
             console.log(usuario);
             navegar('/');
-        } catch (erro) {
+          } catch (erro) {
             console.error(erro);
-        }
+          }
 
         try {
             await pegarAPI.put('/candidatos', usuario, {

@@ -1,6 +1,7 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import '../CampoFormulario/campoFormulario.css';
 
 export default function AlterarFormulario() {
     const location = useLocation();
@@ -45,11 +46,13 @@ export default function AlterarFormulario() {
             const codCandidato = candidato.codCandidato;
 
             const payload = {
+                codCandidato,
                 nomeCandidato,
                 cpf,
                 telefone,
                 Notas: [
                     {
+                        idCandidato: candidato.Notas[0].idCandidato,
                         nota01: parseFloat(nota01),
                         nota02: parseFloat(nota02),
                         nota03: parseFloat(nota03),
@@ -58,30 +61,13 @@ export default function AlterarFormulario() {
             };
 
             try {
-                const config = {
-                    headers: {
-                        codCandidato: codCandidato.toString(), // Define o cabeçalho com o ID do candidato
-                    },
-                };
-
-                // Enviar a alteração para a API
-                await axios.put(
-                    'http://servidorlocal.gerencesistemas.com.br:253/candidatos',
-                    payload,
-                    config
-                );
-
-                // Exibir uma mensagem de sucesso
+                await axios.put(`http://servidorlocal.gerencesistemas.com.br:253/candidatos/${codCandidato}`, payload);
                 alert('Alteração enviada com sucesso!');
             } catch (error) {
-                // Exibir uma mensagem de erro caso ocorra um problema na API
                 alert('Ocorreu um erro ao enviar a alteração. Por favor, tente novamente.');
             }
         }
     };
-
-
-
 
     const handleFormSubmit = (evento) => {
         evento.preventDefault();
@@ -89,38 +75,78 @@ export default function AlterarFormulario() {
     };
 
     return (
-        <form onSubmit={handleFormSubmit}>
-            <label>
-                Nome do Candidato:
-                <input type="text" value={nomeCandidato} onChange={(e) => setNomeCandidato(e.target.value)} />
-            </label>
+        <div className="formulario">
+            <form onSubmit={handleFormSubmit} className="campo-formulario">
+                {/* Campos de entrada para os dados do usuário */}
+                <div className="secao1">
+                    <label htmlFor="nomeCandidato">Nome do Candidato</label>
+                    <input
+                        value={nomeCandidato}
+                        onChange={(evento) => setNomeCandidato(evento.target.value)}
+                        required
+                        type="text"
+                        name="nomeCandidato"
+                        id=".
+                    nomeCandidato"
+                    />
 
-            <label>
-                CPF:
-                <input type="text" value={cpf} onChange={(e) => setCPF(e.target.value)} />
-            </label>
+                    <label htmlFor="cpf">CPF</label>
+                    <input
+                        value={cpf}
+                        onChange={(evento) => setCPF(evento.target.value)}
+                        required
+                        type="text"
+                        name="cpf"
+                        id="cpf"
+                    />
 
-            <label>
-                Telefone:
-                <input type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
-            </label>
+                    <label htmlFor="telefone">Telefone</label>
+                    <input
+                        value={telefone}
+                        onChange={(evento) => setTelefone(evento.target.value)}
+                        required
+                        type="text"
+                        name="telefone"
+                        id="telefone"
+                    />
+                </div>
 
-            <label>
-                Nota 01:
-                <input type="text" value={nota01} onChange={(e) => setNota01(e.target.value)} />
-            </label>
+                {/* Campos de entrada para as notas */}
+                <div className="secao2">
+                    <label htmlFor="nota01">Nota 1</label>
+                    <input
+                        value={nota01}
+                        onChange={(evento) => setNota01(evento.target.value)}
+                        required
+                        type="text"
+                        name="nota01"
+                        id="nota01"
+                    />
 
-            <label>
-                Nota 02:
-                <input type="text" value={nota02} onChange={(e) => setNota02(e.target.value)} />
-            </label>
+                    <label htmlFor="nota02">Nota 2</label>
+                    <input
+                        value={nota02}
+                        onChange={(evento) => setNota02(evento.target.value)}
+                        required
+                        type="text"
+                        name="nota02"
+                        id="nota02"
+                    />
 
-            <label>
-                Nota 03:
-                <input type="text" value={nota03} onChange={(e) => setNota03(e.target.value)} />
-            </label>
+                    <label htmlFor="nota03">Nota 3</label>
+                    <input
+                        value={nota03}
+                        onChange={(evento) => setNota03(evento.target.value)}
+                        required
+                        type="text"
+                        name="nota03"
+                        id="nota03"
+                    />
+                </div>
 
-            <button type="submit">Salvar</button>
-        </form>
+                {/* Botão de envio */}
+                <button type="submit">Enviar Alteração</button>
+            </form>
+        </div>
     );
 }
