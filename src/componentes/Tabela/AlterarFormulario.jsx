@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import pegarAPI from '../../axios/config';
 
 const AlterarFormulario = () => {
@@ -8,6 +8,7 @@ const AlterarFormulario = () => {
     const [telefone, setTelefone] = useState('');
     const [notas, setNotas] = useState([]);
 
+    const navigate = useNavigate();
     const location = useLocation();
     const headers = useMemo(() => location.state?.headers || {}, [location.state]);
 
@@ -31,24 +32,28 @@ const AlterarFormulario = () => {
 
     const alterar = async () => {
         try {
-            const headersAtualizados = {
-                ...headers,
-                nomeCandidato,
-                cpf,
-                telefone,
-            };
-
-            await pegarAPI.put('/candidatos', {
-                nomeCandidato,
-                cpf,
-                telefone,
+            const usuario = {
+                nomeCandidato: nomeCandidato,
+                cpf: cpf,
+                telefone: telefone,
                 Notas: notas.map((nota) => ({
                     idCandidato: nota.idCandidato,
                     nota01: nota.nota01 !== "" ? parseInt(nota.nota01) : null,
                     nota02: nota.nota02 !== "" ? parseInt(nota.nota02) : null,
                     nota03: nota.nota03 !== "" ? parseInt(nota.nota03) : null,
                 })),
-            }, { headers: headersAtualizados });
+            };
+
+            const headersAtualizados = {
+                ...headers,
+                nomeCandidato: nomeCandidato,
+                cpf: cpf,
+                telefone: telefone,
+            };
+
+            await pegarAPI.put('/candidatos', usuario, { headers: headersAtualizados });
+            console.log(usuario);
+            navigate('/');
         } catch (erro) {
             console.error(erro);
         }
@@ -103,7 +108,6 @@ const AlterarFormulario = () => {
                                 onChange={(evento) => handleNotaChange(index, 'nota02', evento.target.value)}
                             />
                         </label>
-
                         <br />
                         <label>
                             Nota 03:
@@ -116,12 +120,8 @@ const AlterarFormulario = () => {
                         <br />
                     </div>
                 ))}
-                <button type="button" onClick={() => setNotas((notas) => [...notas, {}])}>
-                    Adicionar Nota
-                </button>
-                <br />
                 <button type="button" onClick={alterar}>
-                    Alterar Candidato
+                    Alterar
                 </button>
             </form>
         </div>

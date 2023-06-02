@@ -32,24 +32,16 @@ export default function CampoFormulario() {
         };
 
         try {
-            await pegarAPI.post('/candidatos', {
-                nomeCandidato,
-                cpf,
-                telefone,
-                Notas: [
-                  {
-                    nota01: parseInt(nota01),
-                    nota02: parseInt(nota02),
-                    nota03: parseInt(nota03),
-                  },
-                ],
-              }, {
+            await pegarAPI.post('/candidatos', usuario, {
                 headers: {
-                  nomeCandidato,
-                  cpf,
-                  telefone,
+                    nomeCandidato,
+                    cpf,
+                    telefone,
+                    nota01,
+                    nota02,
+                    nota03,
                 },
-              });              
+            });
             console.log(usuario);
             navegar('/');
         } catch (erro) {

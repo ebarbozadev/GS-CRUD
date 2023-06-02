@@ -9,13 +9,13 @@ thead th {
     background-color: var(--azul-nivel-3);
     color: var(--preto);
     font-weight: bold;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
     font-weight: 700;
 }
 
 tbody td {
-    padding: 5px 0 5px 5px;
+    padding: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     border-right: 1px solid rgba(0, 0, 0, .2);
 }
@@ -57,7 +57,6 @@ thead tr th:nth-child(8) {
     text-align: center;
 }
 
-
 .nota03,
 thead tr th:nth-child(7),
 .nota02,
@@ -71,4 +70,16 @@ thead tr th:nth-child(5) {
 .botoes {
     display: flex;
     justify-content: space-around;
+}
+
+thead tr th:nth-child(1) {
+    width: 50px;
+    padding: 0;
+}
+
+
+thead tr th:nth-child(8),
+thead tr th:nth-child(9) {
+    width: 150px;
+    padding: 0;
 }

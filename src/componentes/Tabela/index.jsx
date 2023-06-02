@@ -44,10 +44,10 @@ export default function Tabela() {
         const headers = {
             codCandidato: codCandidato.toString()
         };
-    
+
         // Redireciona para a página de alteração, passando os headers
         navegar('/alterar', { state: { headers } });
-    }; 
+    };
 
 
     if (usuarios.length === 0) {
