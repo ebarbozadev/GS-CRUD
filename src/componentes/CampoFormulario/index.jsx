@@ -16,23 +16,8 @@ export default function CampoFormulario() {
     const cadastrar = async (evento) => {
         evento.preventDefault();
 
-        const usuario = {
-            codCandidato: null,
-            nomeCandidato: nomeCandidato,
-            cpf: cpf,
-            telefone: telefone,
-            Notas: [
-                {
-                    idCandidato: null,
-                    nota01: parseInt(nota01),
-                    nota02: parseInt(nota02),
-                    nota03: parseInt(nota03),
-                },
-            ],
-        };
-
         try {
-            await pegarAPI.post('/candidatos', usuario, {
+            await pegarAPI.post('/candidatos', null, {
                 headers: {
                     nomeCandidato,
                     cpf,
@@ -42,7 +27,7 @@ export default function CampoFormulario() {
                     nota03,
                 },
             });
-            console.log(usuario);
+            // console.log(usuario);
             navegar('/');
         } catch (erro) {
             console.error(erro);

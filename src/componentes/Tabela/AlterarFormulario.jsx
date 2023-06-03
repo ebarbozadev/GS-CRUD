@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import pegarAPI from '../../axios/config';
+import './AlterarFormulario.css';
 
 const AlterarFormulario = () => {
+    const [codCandidato, setCodCandidato] = useState('');
     const [nomeCandidato, setNomeCandidato] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -18,6 +20,7 @@ const AlterarFormulario = () => {
                 const response = await pegarAPI.get('/candidatos', { headers });
                 const candidato = response.data[0];
 
+                setCodCandidato(candidato.codCandidato);
                 setNomeCandidato(candidato.nomeCandidato);
                 setCpf(candidato.cpf);
                 setTelefone(candidato.telefone);
@@ -32,27 +35,18 @@ const AlterarFormulario = () => {
 
     const alterar = async () => {
         try {
-            const usuario = {
-                nomeCandidato: nomeCandidato,
-                cpf: cpf,
-                telefone: telefone,
-                Notas: notas.map((nota) => ({
-                    idCandidato: nota.idCandidato,
-                    nota01: nota.nota01 !== "" ? parseInt(nota.nota01) : null,
-                    nota02: nota.nota02 !== "" ? parseInt(nota.nota02) : null,
-                    nota03: nota.nota03 !== "" ? parseInt(nota.nota03) : null,
-                })),
-            };
 
             const headersAtualizados = {
-                ...headers,
-                nomeCandidato: nomeCandidato,
-                cpf: cpf,
-                telefone: telefone,
-            };
+                codCandidato,
+                nomeCandidato,
+                cpf,
+                telefone,
+                nota01: notas[0].nota01,
+                nota02: notas[0].nota02,
+                nota03: notas[0].nota03,
+            }
 
-            await pegarAPI.put('/candidatos', usuario, { headers: headersAtualizados });
-            console.log(usuario);
+            await pegarAPI.put('/candidatos', null, { headers: headersAtualizados });
             navigate('/');
         } catch (erro) {
             console.error(erro);
@@ -60,6 +54,11 @@ const AlterarFormulario = () => {
     };
 
     const handleNotaChange = (index, field, value) => {
+        // Verifica se o valor está fora do intervalo válido (0 a 10)
+        if (value < 0 || value > 10) {
+            return; // Retorna sem fazer alterações
+        }
+
         setNotas((notas) => {
             const updatedNotas = [...notas];
             updatedNotas[index] = {
@@ -70,59 +69,81 @@ const AlterarFormulario = () => {
         });
     };
 
+    console.log(notas);
+
     return (
         <div>
-            <h2>Alterar Candidato</h2>
-            <form>
-                <label>
-                    Nome:
-                    <input type="text" value={nomeCandidato} onChange={(evento) => setNomeCandidato(evento.target.value)} />
-                </label>
-                <br />
-                <label>
-                    CPF:
-                    <input type="text" value={cpf} onChange={(evento) => setCpf(evento.target.value)} />
-                </label>
-                <br />
-                <label>
-                    Telefone:
-                    <input type="text" value={telefone} onChange={(evento) => setTelefone(evento.target.value)} />
-                </label>
-                <br />
+            <form className='formulario'>
+                <div className="secao1">
+                    <label>
+                        Nome do Candidato
+                    </label>
+                    <input required placeholder="Digite o nome do candidato" type="text" value={nomeCandidato} onChange={(evento) => setNomeCandidato(evento.target.value)} />
+                </div>
+                <div className="secao2">
+                    <div>
+                        <label>
+                            CPF do Candidato
+                        </label>
+                        <input required type="text" value={cpf} onChange={(evento) => setCpf(evento.target.value)} />
+                    </div>
+                    <div>
+                        <label>
+                            Telefone do Candidato
+                        </label>
+                        <input required type="text" value={telefone} onChange={(evento) => setTelefone(evento.target.value)} />
+                    </div>
+                </div>
                 {notas.map((nota, index) => (
-                    <div key={index}>
-                        <label>
-                            Nota 01:
-                            <input
-                                type="number"
-                                value={nota.nota01 !== null ? nota.nota01.toString() : ""}
-                                onChange={(evento) => handleNotaChange(index, 'nota01', evento.target.value)}
-                            />
-                        </label>
-                        <br />
-                        <label>
-                            Nota 02:
-                            <input
-                                type="number"
-                                value={nota.nota02 !== null ? nota.nota02.toString() : ""}
-                                onChange={(evento) => handleNotaChange(index, 'nota02', evento.target.value)}
-                            />
-                        </label>
-                        <br />
-                        <label>
-                            Nota 03:
-                            <input
-                                type="number"
-                                value={nota.nota03 !== null ? nota.nota03.toString() : ""}
-                                onChange={(evento) => handleNotaChange(index, 'nota03', evento.target.value)}
-                            />
-                        </label>
-                        <br />
+                    <div className="secao3">
+                        <div className='notas' key={index}>
+                            <div>
+                                <label>
+                                    Nota 1
+                                </label>
+                                <input
+                                    type="number"
+                                    value={nota.nota01 !== null ? parseFloat(nota.nota01) : ""}
+                                    onChange={(evento) => handleNotaChange(index, 'nota01', evento.target.value)}
+                                    min="0"
+                                    max="10"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>
+                                    Nota 2
+                                </label>
+                                <input
+                                    type="number"
+                                    value={nota.nota02 !== null ? parseFloat(nota.nota02) : ""}
+                                    onChange={(evento) => handleNotaChange(index, 'nota02', evento.target.value)}
+                                    min="0"
+                                    max="10"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>
+                                    Nota 3
+                                </label>
+                                <input
+                                    type="number"
+                                    value={nota.nota03 !== null ? parseFloat(nota.nota03) : ""}
+                                    onChange={(evento) => handleNotaChange(index, 'nota03', evento.target.value)}
+                                    min="0"
+                                    max="10"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="secao3__botao__alterarformulario">
+                            <button type="button" onClick={alterar}>
+                                Alterar
+                            </button>
+                        </div>
                     </div>
                 ))}
-                <button type="button" onClick={alterar}>
-                    Alterar
-                </button>
             </form>
         </div>
     );

@@ -38,6 +38,7 @@ input:focus {
 
 .secao3 {
     display: flex;
+    justify-content: space-between;
 }
 
 .notas {
@@ -55,15 +56,16 @@ input:focus {
     font-size: 16px;
 }
 
-.secao3_botao {
+.secao3__botao__alterarformulario {
     width: 50%;
     display: flex;
     align-self: flex-end;
     justify-content: flex-end;
 }
 
-.secao3 input[type="submit"] {
+.secao3__botao__alterarformulario button {
     background-color: var(--verde);
+    border-radius: 10px;
     margin-left: auto;
     width: 100px;
     height: 40px;

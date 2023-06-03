@@ -54,6 +54,16 @@ export default function Tabela() {
         return null; // Retorna null se não houver usuários
     }
 
+    const media = (nota01, nota02, nota03) => {
+        const calculo = (nota01 + nota02 + nota03) / 3;
+
+        if (calculo >= 7) {
+            return 'Apto';
+        } else {
+            return 'Inapto';
+        }
+    }
+
     return (
         <table>
             <thead>
@@ -83,7 +93,11 @@ export default function Tabela() {
                                 <td className={styles.nota03}>{nota.nota03}</td>
                             </React.Fragment>
                         ))}
-                        <td className={styles.estado}>Aprovado</td>
+                        <td className={styles.estado}>
+                            {
+                                media(usuario.Notas[0].nota01, usuario.Notas[0].nota02, usuario.Notas[0].nota03)
+                            }
+                        </td>
                         <td className={styles.botoes}>
                             <button
                                 className={styles.alterar_btn}
